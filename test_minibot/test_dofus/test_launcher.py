@@ -1,10 +1,13 @@
 import unittest
+from pyscreeze import Point
 
-from minibot.dofus.launcher import Launcher
+from minibot.ankama.launcher.launcher import Launcher
 
 
 class TestLauncher(unittest.TestCase):
-    launcher = Launcher.factory()
+
+    def setUp(self):
+        self.launcher = Launcher.factory()
 
     def test_window(self):
         window = Launcher.instance.window
@@ -30,6 +33,18 @@ class TestLauncher(unittest.TestCase):
     def test_is_maximized(self):
         Launcher.instance.maximize()
         assert Launcher.instance.is_maximized
+
+    def test_is_activated(self):
+        Launcher.instance.activate()
+        assert Launcher.instance.is_activated
+
+    def test_dofus(self):
+        dofus = Launcher.instance.dofus()
+        assert isinstance(dofus, Point)
+
+    def test_open(self):
+        Launcher.instance.open()
+        assert Launcher.instance._window()
 
     def test_close(self):
         Launcher.instance.close()
